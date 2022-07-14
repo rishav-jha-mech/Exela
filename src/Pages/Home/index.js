@@ -1,8 +1,8 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 
-const Home = ({navigation}) => {
+const Home = () => {
 
 	const [data, setData] = useState([])
 	const [Loading, setLoading] = useState(true)
@@ -39,7 +39,14 @@ const Home = ({navigation}) => {
 
 	return (
 		<div className='fullmh container'>
-			<h1 className='my-4'>Exela Electricity Bill ({data.length})</h1>
+			<div className="row align-items-center">
+				<h1 className='col-12 my-4 col-lg-8'>
+					Exela Electricity Bill ({data.length})
+				</h1>
+				<div className="col-12 my-3 col-lg-4 d-flex justify-content-end">
+					<Link to={'/addBill'} className="btn btn-success">Add Bills</Link>
+				</div>
+			</div>
 			<hr />
 			{
 				Error ? <h1 className='my-5 text-center'>Error Occured while loading bills</h1>
@@ -50,39 +57,43 @@ const Home = ({navigation}) => {
 							</div>
 						</div>
 						:
-						<div className='table-responsive'>
-							<table className="table">
-								<thead>
-									<tr>
-										<th scope="col">Sl. no</th>
-										<th scope="col">Month</th>
-										<th scope="col">Year</th>
-										<th scope="col">Bill date</th>
-										<th scope="col">Paid date</th>
-										<th scope="col">Unit Consumed</th>
-										<th scope="col">Amount</th>
-									</tr>
-								</thead>
-								<tbody>
-									{
-										data.map((item, index) => {
-											let bill_date = new Date(item.bill_date)
-											return (
-												<tr>
-													<th scope="row">{index + 1}</th>
-													<td> <Link style={{textDecoration: 'none',color: 'black'}} to={`bill/${item._id}`}> {MONTHS[bill_date.getMonth()]}</Link></td>
-													<td> <Link style={{textDecoration: 'none',color: 'black'}} to={`bill/${item._id}`}> {bill_date.getFullYear()}</Link></td>
-													<td> <Link style={{textDecoration: 'none',color: 'black'}} to={`bill/${item._id}`}> {ToDate(bill_date)}</Link></td>
-													<td> <Link style={{textDecoration: 'none',color: 'black'}} to={`bill/${item._id}`}> {ToDate(item.paid_date)}</Link></td>
-													<td> <Link style={{textDecoration: 'none',color: 'black'}} to={`bill/${item._id}`}> {item.units}</Link></td>
-													<td> <Link style={{textDecoration: 'none',color: 'black'}} to={`bill/${item._id}`}> {item.amount}</Link></td>
-												</tr>
-											);
-										})
-									}
-								</tbody>
-							</table>
-						</div>
+
+						data.length == 0 ? <h2 className="text-center my-5 py-5">NO BILLS ARE PRESENT</h2>
+							:
+
+							<div className='table-responsive'>
+								<table className="table">
+									<thead>
+										<tr>
+											<th scope="col">Sl. no</th>
+											<th scope="col">Month</th>
+											<th scope="col">Year</th>
+											<th scope="col">Bill date</th>
+											<th scope="col">Paid date</th>
+											<th scope="col">Unit Consumed</th>
+											<th scope="col">Amount</th>
+										</tr>
+									</thead>
+									<tbody>
+										{
+											data.map((item, index) => {
+												let bill_date = new Date(item.bill_date)
+												return (
+													<tr>
+														<th scope="row">{index + 1}</th>
+														<td> <Link style={{ textDecoration: 'none', color: 'black' }} to={`bill/${item._id}`}> {MONTHS[bill_date.getMonth()]}</Link></td>
+														<td> <Link style={{ textDecoration: 'none', color: 'black' }} to={`bill/${item._id}`}> {bill_date.getFullYear()}</Link></td>
+														<td> <Link style={{ textDecoration: 'none', color: 'black' }} to={`bill/${item._id}`}> {ToDate(bill_date)}</Link></td>
+														<td> <Link style={{ textDecoration: 'none', color: 'black' }} to={`bill/${item._id}`}> {ToDate(item.paid_date)}</Link></td>
+														<td> <Link style={{ textDecoration: 'none', color: 'black' }} to={`bill/${item._id}`}> {item.units}</Link></td>
+														<td> <Link style={{ textDecoration: 'none', color: 'black' }} to={`bill/${item._id}`}> {item.amount}</Link></td>
+													</tr>
+												);
+											})
+										}
+									</tbody>
+								</table>
+							</div>
 			}
 		</div>
 	)
