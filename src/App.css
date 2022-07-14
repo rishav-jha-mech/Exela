@@ -1,0 +1,280 @@
+.da-link {
+    font-size: 1.75rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    letter-spacing: 1px;
+    margin-left: 0.5rem;
+}
+.fullmh{
+    min-height: 100vh;
+}
+.minh50 {
+    min-height: 50px;
+}
+
+.minh75 {
+    min-height: 75px;
+}
+
+.minh100 {
+    min-height: 100px;
+}
+
+.minh125 {
+    min-height: 125px;
+}
+
+.minh150 {
+    min-height: 150px;
+}
+
+.minh175 {
+    min-height: 175px;
+}
+
+.minh200 {
+    min-height: 200px;
+}
+
+.minh225px {
+    min-height: 225px;
+}
+
+.minh250px {
+    min-height: 250px;
+}
+
+.minh300 {
+    min-height: 300px;
+}
+
+.minh400 {
+    min-height: 400px;
+}
+
+.minh450 {
+    min-height: 450px;
+}
+
+.minh500 {
+    min-height: 500px;
+}
+
+.minh600 {
+    min-height: 600px;
+}
+
+.minh700 {
+    min-height: 700px;
+}
+
+.minh800 {
+    min-height: 800px;
+}
+
+.minh900 {
+    min-height: 900px;
+}
+
+.minhf {
+    min-height: 100px;
+}
+
+.maxh100 {
+    max-height: 100px;
+}
+
+.maxh125 {
+    max-height: 125px;
+}
+
+.maxh150 {
+    max-height: 150px;
+}
+
+.maxh175 {
+    max-height: 175px;
+}
+
+.maxh200 {
+    max-height: 200px;
+}
+
+.maxh250 {
+    max-height: 250px;
+}
+
+.maxh300 {
+    max-height: 300px;
+}
+
+.maxh400 {
+    max-height: 400px;
+}
+
+.maxh500 {
+    max-height: 500px;
+}
+
+.maxh600 {
+    max-height: 600px;
+}
+
+.maxh700 {
+    max-height: 700px;
+}
+
+.maxh800 {
+    max-height: 800px;
+}
+
+.curpo {
+    cursor: pointer;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.fw-600 {
+    font-weight: 700;
+}
+
+.green-touch {
+    transition: 0.5s !important;
+}
+
+.green-touch:hover {
+    background: rgba(2, 255, 2, 0.1) !important;
+    transition: 0.5s !important;
+}
+
+.red-touch {
+    transition: 0.5s !important;
+}
+
+.red-touch:hover {
+    background: rgba(255, 0, 0, 0.25) !important;
+    transition: 0.5s !important;
+}
+
+
+.searchBtn {
+    position: absolute;
+    top: 0;
+    right: 12px;
+}
+
+#resultBox {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-top: 8px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    background: #fff;
+    overflow: hidden;
+    z-index: 100;
+}
+
+#resultBox a {
+    font-size: 14px;
+}
+
+#resultBox a:hover {
+    background: #435EBE;
+    color: #fff;
+}
+
+#hideDropdown {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: #000;
+    z-index: 1;
+}
+
+.minwi {
+    min-width: 140px;
+}
+
+.smolText {
+    font-size: 14px;
+}
+
+.smollerText {
+    font-size: 12px;
+}
+
+.fw-700 {
+    font-weight: 700;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.dropdown-menu {
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu a {
+    position: relative;
+    transition: 0.25s !important;
+}
+
+.dropdown-menu a:hover {
+    background: #435EBE !important;
+    color: #fff !important;
+    transition: 0.25s !important;
+}
+
+.par {
+    position: absolute;
+    top: 12px;
+    right: 1rem;
+}
+
+.active-sort {
+    background: #435EBE !important;
+    color: #fff !important;
+}
+
+
+.text-primary {
+    color: #435EBE !important;
+}
+
+.op10 {
+    opacity: 0.1;
+}
+
+.op25 {
+    opacity: 0.25;
+}
+
+.op35 {
+    opacity: 0.35;
+}
+
+.op50 {
+    opacity: 0.50;
+}
+
+.op75 {
+    opacity: 0.75;
+}
+
+.op80 {
+    opacity: 0.80;
+}
+
+.op90 {
+    opacity: 0.80;
+}
+.row{
+    margin: 0 !important;
+}
