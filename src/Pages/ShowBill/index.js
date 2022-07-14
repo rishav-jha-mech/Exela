@@ -31,7 +31,7 @@ function ShowBill(props) {
 
     const fetchData = () => {
         setLoading(true)
-        fetch(`http://127.0.0.1:4000/bill/${props.match.params.id}`, {
+        fetch(`https://exela-backend.herokuapp.com/bill/${props.match.params.id}`, {
             method: 'GET',
         }).then(res => res.json())
             .then(res => {
@@ -50,7 +50,7 @@ function ShowBill(props) {
 
     const updateBill = () => {
         setLoading(true);
-        fetch(`http://127.0.0.1:4000/bill/${props.match.params.id}`, {
+        fetch(`https://exela-backend.herokuapp.com/bill/${props.match.params.id}`, {
             method: 'PUT',
             headers: {
                 Accept: 'application/form-data',
@@ -79,7 +79,7 @@ function ShowBill(props) {
 
     const deleteBill = () => {
         setLoading(true)
-        fetch(`http://127.0.0.1:4000/bill/${id}`, {
+        fetch(`https://exela-backend.herokuapp.com/bill/${id}`, {
             method: 'DELETE',
         }).then(res => res.json())
             .then(res => {

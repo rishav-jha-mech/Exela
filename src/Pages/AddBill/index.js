@@ -12,7 +12,7 @@ function AddBill() {
 
     const formSubmitted = () => {
         setLoading(true);
-        fetch(`http://127.0.0.1:4000/`, {
+        fetch(`https://exela-backend.herokuapp.com/`, {
             method: 'POST',
             headers: {
                 Accept: 'application/form-data',
@@ -30,7 +30,7 @@ function AddBill() {
                 setLoading(false)
                 console.log(res);
                 Swal.fire('Bill Added', '', 'success').then(() => {
-                    // window.location.href = '/'
+                    window.location.href = '/'
                 })
             }).catch(err => {
                 setError(true);

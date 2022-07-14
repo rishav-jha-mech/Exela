@@ -23,7 +23,7 @@ const Home = () => {
 	}, [Loading, Error, Page, Sort, SortType])
 
 	function loadData() {
-		fetch(`http://127.0.0.1:4000?page=${Page}&sort=${Sort}&sort_type=${SortType}`, {
+		fetch(`https://exela-backend.herokuapp.com/?page=${Page}&sort=${Sort}&sort_type=${SortType}`, {
 			method: 'GET',
 		}).then(res => res.json())
 			.then(res => {
