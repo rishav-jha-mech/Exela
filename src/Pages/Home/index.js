@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import ToDate from '../../Components/todate'
 import Pagination from 'react-bootstrap/Pagination';
+import Dropdown from 'react-bootstrap/Dropdown';
+
 const Home = () => {
 
 	const [data, setData] = useState([])
@@ -10,16 +12,18 @@ const Home = () => {
 	const [Error, setError] = useState(false)
 
 	const [Page, setPage] = useState(1)
-	const [Sort, setSort] = useState('')
+	const [Sort, setSort] = useState(-1)
+	const [SortType, setSortType] = useState('paid_date')
+
 	const [Count, setCount] = useState(0)
 	const [items, setItems] = useState([])
 
 	useEffect(() => {
 		loadData();
-	}, [Loading, Error, Page, Sort])
+	}, [Loading, Error, Page, Sort, SortType])
 
 	function loadData() {
-		fetch(`http://127.0.0.1:4000?page=${Page}`, {
+		fetch(`http://127.0.0.1:4000?page=${Page}&sort=${Sort}&sort_type=${SortType}`, {
 			method: 'GET',
 		}).then(res => res.json())
 			.then(res => {
@@ -62,6 +66,55 @@ const Home = () => {
 				</div>
 			</div>
 			<hr />
+			<Dropdown className="mb-2">
+				<Dropdown.Toggle variant="success" className="btn-md" id="dropdown-basic">
+					{Sort == 1 && SortType == 'units' ? 'Unit Consumed Ascending' :
+						Sort == -1 && SortType == 'units' ? 'Unit Consumed Descending' :
+							Sort == 1 && SortType == 'amount' ? 'Amount Ascending' :
+								Sort == -1 && SortType == 'amount' ? 'Amount Descending' :
+									Sort == -1 && SortType == 'paid_date' ? 'Recent Paid Bills First' : 'Sort'}
+				</Dropdown.Toggle>
+
+				<Dropdown.Menu>
+					<Dropdown.Item onClick={() => {
+						setSort(1);
+						setSortType('units');
+					}}
+						className={`${Sort == 1 && SortType == 'units' ? 'bg-primary text-white' : ''}`}
+
+					>Unit Consumed Ascending</Dropdown.Item>
+					<Dropdown.Item onClick={() => {
+						setSort(-1);
+						setSortType('units');
+					}}
+						className={`${Sort == -1 && SortType == 'units' ? 'bg-primary text-white' : ''}`}
+					>
+
+						Unit Consumed Descending
+					</Dropdown.Item>
+					<Dropdown.Item onClick={() => {
+						setSort(1);
+						setSortType('amount');
+					}}
+						className={`${Sort == 1 && SortType == 'amount' ? 'bg-primary text-white' : ''}`}
+
+					>Amount Ascending</Dropdown.Item>
+					<Dropdown.Item onClick={() => {
+						setSort(-1);
+						setSortType('amount');
+					}}
+						className={`${Sort == -1 && SortType == 'amount' ? 'bg-primary text-white' : ''}`}
+
+					>Amount Descending</Dropdown.Item>
+					<Dropdown.Item onClick={() => {
+						setSort(-1);
+						setSortType('paid_date');
+					}}
+						className={`${Sort == -1 && SortType == 'paid_date' ? 'bg-primary text-white' : ''}`}
+
+					>Recent Paid Bills First</Dropdown.Item>
+				</Dropdown.Menu>
+			</Dropdown>
 			{
 				Error ? <h1 className='my-5 text-center'>Error Occured while loading bills</h1>
 					: Loading ?
