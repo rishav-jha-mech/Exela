@@ -1,7 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Swal from 'sweetalert2'
+import ToDate from '../../Components/todate'
 
 function ShowBill(props) {
+
+
+    const bill_date = useRef();
+    const paid_date = useRef();
+    const units = useRef();
+    const amount = useRef();
+
     const [id, setId] = useState()
     const [data, setData] = useState({
         "bill_date": null,
@@ -17,7 +25,7 @@ function ShowBill(props) {
         try {
             setId(props.match.params.id)
         } catch {
-            window.location.href= '/'
+            window.location.href = '/'
         }
     }, [])
 
@@ -39,6 +47,37 @@ function ShowBill(props) {
             })
     }
 
+    const updateBill = () => {
+        setLoading(true);
+        fetch(`http://127.0.0.1:4000/${props.match.params.id}`, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/form-data',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "bill_date": bill_date.current.defaultValue,
+                "paid_date": paid_date.current.defaultValue,
+                "units": units.current.defaultValue,
+                "amount": amount.current.defaultValue
+            })
+        }).then(res => res.json())
+            .then(res => {
+                setLoading(false)
+                console.log(res);
+                Swal.fire('Bill Added', '', 'success').then(() => {
+                    // window.location.href = '/'
+                })
+            }).catch(err => {
+                setError(true);
+                Swal.fire(
+                    'Error',
+                    `${err}`,
+                    'error'
+                )
+            })
+    }
+
     const deleteBill = () => {
         setLoading(true)
         fetch(`http://127.0.0.1:4000/bill/${id}`, {
@@ -46,8 +85,8 @@ function ShowBill(props) {
         }).then(res => res.json())
             .then(res => {
                 console.log(res);
-                Swal.fire('Bill Deleted','','success').then(() =>{
-                    window.location.href= '/'
+                Swal.fire('Bill Deleted', '', 'success').then(() => {
+                    window.location.href = '/'
                 })
             }).catch(err => {
                 setError(true);
@@ -68,18 +107,23 @@ function ShowBill(props) {
                     </div>
                     <div className="card-body">
                         {Error ? <h5 className='my-4 text-center'>Error Loading Bill</h5> :
-                            <form>
-                                <span className='d-block my-2'>Bill Date <span className="text-danger">*</span> </span>
-                                <input className='form-control' type="datetime" name="date" placeholder='Enter Bill date' id="" value={data.bill_date} required />
-                                <span className='d-block my-2'>Payment Date <span className="text-danger">*</span> </span>
-                                <input className='form-control' type="datetime" name="date" placeholder='Enter payment date' id="" required value={data.paid_date} />
-                                <span className='d-block my-2'>No of units <span className="text-danger">*</span> </span>
-                                <input className='form-control' type="text" name="date" id="" placeholder='Enter no of units' value={data.units} required />
-                                <span className='d-block my-2'>Amount <span className="text-danger">*</span> </span>
-                                <input className='form-control' type="text" name="date" placeholder='enter amount' id="" value={data.amount} required />
+
+                            <form onSubmit={(e) => {
+                                e.preventDefault();
+                                updateBill()
+                                return false;
+                            }}>
+                                <span className='d-block my-2 fw-600'>Bill Date <span className="text-danger">*</span> (Currently: {ToDate(data.bill_date)})</span>
+                                <input ref={bill_date} className='form-control' type="date" placeholder='Enter Bill Date' defaultValue={data.bill_date} required />
+                                <span className='d-block my-2 fw-600'>Payment Date <span className="text-danger">*</span> (Currently: {ToDate(data.paid_date)})</span>
+                                <input ref={paid_date} className='form-control' type="date" placeholder='Enter Payment Date' defaultValue={data.paid_date} required />
+                                <span className='d-block my-2 fw-600'>No of units <span className="text-danger">*</span> </span>
+                                <input ref={units} className='form-control' type="number" placeholder='Enter no of units' defaultValue={data.amount} required />
+                                <span className='d-block my-2 fw-600'>Amount <span className="text-danger">*</span> </span>
+                                <input ref={amount} className='form-control' type="number" placeholder='Enter Amount' defaultValue={data.units} required />
                                 <div className="row">
                                     <div className='col-6'>
-                                        <button type='button' className='w-100 btn btn-lg mt-3 mb-1 btn-danger' onClick={() => {deleteBill()}}>Delete</button>
+                                        <button type='button' className='w-100 btn btn-lg mt-3 mb-1 btn-danger' onClick={() => { deleteBill() }}>Delete</button>
                                     </div>
                                     <div className='col-6'>
                                         <button type='submit' className='w-100 btn btn-lg mt-3 mb-1 btn-success'>Update</button>

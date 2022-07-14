@@ -1,19 +1,41 @@
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
-
+import ToDate from '../../Components/todate'
+import Pagination from 'react-bootstrap/Pagination';
 const Home = () => {
 
 	const [data, setData] = useState([])
 	const [Loading, setLoading] = useState(true)
 	const [Error, setError] = useState(false)
 
+	const [Page, setPage] = useState(1)
+	const [Sort, setSort] = useState('')
+	const [Count, setCount] = useState(0)
+	const [items, setItems] = useState([])
+
 	useEffect(() => {
-		fetch('http://127.0.0.1:4000', {
+		loadData();
+	}, [Loading, Error, Page, Sort])
+
+	function loadData() {
+		fetch(`http://127.0.0.1:4000?page=${Page}`, {
 			method: 'GET',
 		}).then(res => res.json())
 			.then(res => {
 				console.log(res);
+				setCount(res.totalBills)
+				let active = Page;
+				let items = [];
+				for (let number = 1; number <= ((res.totalBills / 9).toPrecision(1)); number++) {
+					items.push(
+						<Pagination.Item onClick={() => setPage(number)} key={number} active={number === active}>
+							{number}
+						</Pagination.Item>,
+					);
+				}
+				setItems(items)
+
 				setData(res.resultArray)
 				setLoading(false)
 			}).catch(err => {
@@ -24,24 +46,16 @@ const Home = () => {
 					'error'
 				)
 			})
-	}, [Loading, Error])
+	}
 
 	const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',]
-	const ToDate = (param) => {
-		try {
-			const date = new Date(param)
-			return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
-		}
-		catch {
-			return 'Error'
-		}
-	}
+
 
 	return (
 		<div className='fullmh container'>
 			<div className="row align-items-center">
 				<h1 className='col-12 my-4 col-lg-8'>
-					Exela Electricity Bill ({data.length})
+					Exela Electricity Bill ({Count})
 				</h1>
 				<div className="col-12 my-3 col-lg-4 d-flex justify-content-end">
 					<Link to={'/addBill'} className="btn btn-success">Add Bills</Link>
@@ -79,7 +93,7 @@ const Home = () => {
 											data.map((item, index) => {
 												let bill_date = new Date(item.bill_date)
 												return (
-													<tr>
+													<tr key={item._id}>
 														<th scope="row">{index + 1}</th>
 														<td> <Link style={{ textDecoration: 'none', color: 'black' }} to={`bill/${item._id}`}> {MONTHS[bill_date.getMonth()]}</Link></td>
 														<td> <Link style={{ textDecoration: 'none', color: 'black' }} to={`bill/${item._id}`}> {bill_date.getFullYear()}</Link></td>
@@ -95,6 +109,10 @@ const Home = () => {
 								</table>
 							</div>
 			}
+			<span className="text-center d-block fw-bold">No. of pages : {(Count / 9).toPrecision(1)}</span>
+			<div className="d-flex py-4 justify-content-center align-items-center">
+				<Pagination size="md">{items}</Pagination>
+			</div>
 		</div>
 	)
 }
