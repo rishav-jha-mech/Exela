@@ -64,7 +64,7 @@ function ShowBill(props) {
             })
         }).then(res => res.json())
             .then(res => {
-            fetchData();
+                fetchData();
                 console.log(res);
                 Swal.fire('Bill Updated', '', 'success')
             }).catch(err => {
@@ -106,29 +106,35 @@ function ShowBill(props) {
                     </div>
                     <div className="card-body">
                         {Error ? <h5 className='my-4 text-center'>Error Loading Bill</h5> :
-
-                            <form onSubmit={(e) => {
-                                e.preventDefault();
-                                updateBill()
-                                return false;
-                            }}>
-                                <span className='d-block my-2 fw-600'>Bill Date <span className="text-danger">*</span> (Currently: {ToDate(data.bill_date)})</span>
-                                <input ref={bill_date} className='form-control' type="date" placeholder='Enter Bill Date' defaultValue={data.bill_date} required />
-                                <span className='d-block my-2 fw-600'>Payment Date <span className="text-danger">*</span> (Currently: {ToDate(data.paid_date)})</span>
-                                <input ref={paid_date} className='form-control' type="date" placeholder='Enter Payment Date' defaultValue={data.paid_date} required />
-                                <span className='d-block my-2 fw-600'>No of units <span className="text-danger">*</span> </span>
-                                <input ref={units} className='form-control' type="number" placeholder='Enter no of units' defaultValue={data.units} required />
-                                <span className='d-block my-2 fw-600'>Amount <span className="text-danger">*</span> </span>
-                                <input ref={amount} className='form-control' type="number" placeholder='Enter Amount' defaultValue={data.amount} required />
-                                <div className="row">
-                                    <div className='col-6'>
-                                        <button type='button' className='w-100 btn btn-lg mt-3 mb-1 btn-danger' onClick={() => { deleteBill() }}>Delete</button>
-                                    </div>
-                                    <div className='col-6'>
-                                        <button type='submit' className='w-100 btn btn-lg mt-3 mb-1 btn-success'>Update</button>
+                            Loading ?
+                                <div className='my-5 py-5 d-flex justify-content-center minh250 w-100'>
+                                    <div className="spinner-border" role="status">
+                                        <span className="visually-hidden d-block">Loading...</span>
                                     </div>
                                 </div>
-                            </form>
+                                :
+                                <form onSubmit={(e) => {
+                                    e.preventDefault();
+                                    updateBill()
+                                    return false;
+                                }}>
+                                    <span className='d-block my-2 fw-600'>Bill Date <span className="text-danger">*</span> (Currently: {ToDate(data.bill_date)})</span>
+                                    <input ref={bill_date} className='form-control' type="date" placeholder='Enter Bill Date' defaultValue={data.bill_date} required />
+                                    <span className='d-block my-2 fw-600'>Payment Date <span className="text-danger">*</span> (Currently: {ToDate(data.paid_date)})</span>
+                                    <input ref={paid_date} className='form-control' type="date" placeholder='Enter Payment Date' defaultValue={data.paid_date} required />
+                                    <span className='d-block my-2 fw-600'>No of units <span className="text-danger">*</span> </span>
+                                    <input ref={units} className='form-control' type="number" placeholder='Enter no of units' defaultValue={data.units} required />
+                                    <span className='d-block my-2 fw-600'>Amount <span className="text-danger">*</span> </span>
+                                    <input ref={amount} className='form-control' type="number" placeholder='Enter Amount' defaultValue={data.amount} required />
+                                    <div className="row">
+                                        <div className='col-6'>
+                                            <button type='button' className='w-100 btn btn-lg mt-3 mb-1 btn-danger' onClick={() => { deleteBill() }}>Delete</button>
+                                        </div>
+                                        <div className='col-6'>
+                                            <button type='submit' className='w-100 btn btn-lg mt-3 mb-1 btn-success'>Update</button>
+                                        </div>
+                                    </div>
+                                </form>
                         }
                     </div>
                 </div>

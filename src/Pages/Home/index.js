@@ -23,6 +23,7 @@ const Home = () => {
 	}, [Loading, Error, Page, Sort, SortType])
 
 	function loadData() {
+		setLoading(true);
 		fetch(`https://exela-backend.herokuapp.com/?page=${Page}&sort=${Sort}&sort_type=${SortType}`, {
 			method: 'GET',
 		}).then(res => res.json())
