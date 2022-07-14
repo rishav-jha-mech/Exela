@@ -30,6 +30,7 @@ function ShowBill(props) {
     }, [])
 
     const fetchData = () => {
+        setLoading(true)
         fetch(`http://127.0.0.1:4000/bill/${props.match.params.id}`, {
             method: 'GET',
         }).then(res => res.json())
@@ -49,25 +50,23 @@ function ShowBill(props) {
 
     const updateBill = () => {
         setLoading(true);
-        fetch(`http://127.0.0.1:4000/${props.match.params.id}`, {
+        fetch(`http://127.0.0.1:4000/bill/${props.match.params.id}`, {
             method: 'PUT',
             headers: {
                 Accept: 'application/form-data',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                "bill_date": bill_date.current.defaultValue,
-                "paid_date": paid_date.current.defaultValue,
-                "units": units.current.defaultValue,
-                "amount": amount.current.defaultValue
+                "bill_date": bill_date.current.value,
+                "paid_date": paid_date.current.value,
+                "units": units.current.value,
+                "amount": amount.current.value
             })
         }).then(res => res.json())
             .then(res => {
-                setLoading(false)
+            fetchData();
                 console.log(res);
-                Swal.fire('Bill Added', '', 'success').then(() => {
-                    // window.location.href = '/'
-                })
+                Swal.fire('Bill Updated', '', 'success')
             }).catch(err => {
                 setError(true);
                 Swal.fire(
@@ -118,9 +117,9 @@ function ShowBill(props) {
                                 <span className='d-block my-2 fw-600'>Payment Date <span className="text-danger">*</span> (Currently: {ToDate(data.paid_date)})</span>
                                 <input ref={paid_date} className='form-control' type="date" placeholder='Enter Payment Date' defaultValue={data.paid_date} required />
                                 <span className='d-block my-2 fw-600'>No of units <span className="text-danger">*</span> </span>
-                                <input ref={units} className='form-control' type="number" placeholder='Enter no of units' defaultValue={data.amount} required />
+                                <input ref={units} className='form-control' type="number" placeholder='Enter no of units' defaultValue={data.units} required />
                                 <span className='d-block my-2 fw-600'>Amount <span className="text-danger">*</span> </span>
-                                <input ref={amount} className='form-control' type="number" placeholder='Enter Amount' defaultValue={data.units} required />
+                                <input ref={amount} className='form-control' type="number" placeholder='Enter Amount' defaultValue={data.amount} required />
                                 <div className="row">
                                     <div className='col-6'>
                                         <button type='button' className='w-100 btn btn-lg mt-3 mb-1 btn-danger' onClick={() => { deleteBill() }}>Delete</button>
