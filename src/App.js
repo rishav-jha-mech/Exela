@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import HomePage from './Pages/Home/index'
 import AddBill from './Pages/AddBill/index'
-
+import ShowBill from './Pages/ShowBill/index'
 import './App.css'
 
 function App() {
@@ -13,9 +13,8 @@ function App() {
           <Switch>
           <Route path="/" component={HomePage} exact/>
           <Route path="/addBill" component={AddBill} />
-          {/* <Route path="/" component={ComingSoon} /> */}
-          {/* <Route path="/blogs" component={ComingSoon} /> */}
-          {/* <Route component={Error404} /> */}
+          <Route path="/bill/:id" component={ShowBill} />
+          
           </Switch>
       </BrowserRouter>
     </>
