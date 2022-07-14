@@ -20,10 +20,10 @@ const Home = () => {
 
 	useEffect(() => {
 		loadData();
-	}, [Loading, Error, Page, Sort, SortType])
+	}, [Page, Sort, SortType])
 
 	function loadData() {
-		setLoading(true);
+		setLoading(true)
 		fetch(`https://exela-backend.herokuapp.com/?page=${Page}&sort=${Sort}&sort_type=${SortType}`, {
 			method: 'GET',
 		}).then(res => res.json())
